@@ -49,8 +49,36 @@ void output (int ** mtx, size_t rows, size_t cols) {
     }
 }
 
+int ** convert(const int * t, size_t n, const size_t * lns, size_t rows) {
+    int ** table = new int * [rows];
+    size_t current = 0;
+    for (size_t i = 0; i < rows; ++i) {
+        table[i] = new int[lns[i]];
+        for (size_t j = 0; j < lns[i]; ++j) {
+            table[i][j] = t[current];
+            current += 1;
+        }
+    }
+    return table;
+}
+
 int main ()
 {
+    int t[] = {2, 2, 2, 3, 3, 42};
+    size_t n = 4;
+    size_t lns[] = {3, 2, 1};
+    size_t rows = 3;
+    int ** result = convert(t, n, lns, rows);
+    for (size_t i = 0; i < rows; ++i) {
+        std::cout << result[i][0];
+        for (size_t j = 1; j < lns[i]; ++j) {
+            std::cout << " " << result[i][j];
+        }
+        std::cout << "\n";
+    }
+    destroy(result, rows);
+
+
     size_t r = 0, c = 0;
     std::cin >> r >> c;
     if (!std::cin) {
